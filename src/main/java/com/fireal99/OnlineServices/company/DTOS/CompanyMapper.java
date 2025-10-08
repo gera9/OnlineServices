@@ -6,7 +6,7 @@ import com.fireal99.OnlineServices.company.Company;
 import com.fireal99.OnlineServices.user.User;
 
 @Component
-public class Mapper {
+public class CompanyMapper {
     public static Company toCompany(CompanyCreationDTO companyCreationDTO) {
         var admin = new User(companyCreationDTO.getAdminId(), null, null, null, null, null, null, null);
         return new Company(companyCreationDTO.getId(),

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fireal99.OnlineServices.company.DTOS.CompanyCreationDTO;
 import com.fireal99.OnlineServices.company.DTOS.CompanyListDTO;
-import com.fireal99.OnlineServices.company.DTOS.Mapper;
+import com.fireal99.OnlineServices.company.DTOS.CompanyMapper;
 import com.fireal99.OnlineServices.user.User;
 
 @RestController
@@ -28,15 +28,15 @@ public class CompanyController {
     }
 
     @PostMapping
-    public UUID createCompany(@RequestBody CompanyCreationDTO company) {
-        return companyService.createCompany(Mapper.toCompany(company));
+    public UUID create(@RequestBody CompanyCreationDTO company) {
+        return companyService.create(CompanyMapper.toCompany(company));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Company> findById(@PathVariable UUID id) {
         var optCompany = companyService.findById(id);
         if (optCompany.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(optCompany.get(), HttpStatus.OK);
@@ -59,7 +59,7 @@ public class CompanyController {
 
         var result = companyService.findAll(name, pageNumber, pageSize)
                 .stream()
-                .map(Mapper::tCompanyListDTO)
+                .map(CompanyMapper::tCompanyListDTO)
                 .toList();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class CompanyController {
     public ResponseEntity<Company> findByAdminId(@PathVariable UUID adminId) {
         var optCompany = companyService.findByAdminId(adminId);
         if (optCompany.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(optCompany.get(), HttpStatus.OK);
@@ -80,7 +80,7 @@ public class CompanyController {
         var usrFromToken = new User();
         var optCompany = companyService.findByAdminId(usrFromToken.getId());
         if (optCompany.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(optCompany.get(), HttpStatus.OK);

@@ -19,3 +19,13 @@ CREATE TABLE IF NOT EXISTS companies (
       FOREIGN KEY(user_id)
         REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS categories (
+    id UUID PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    img_path VARCHAR(100) NOT NULL,
+    parent_id UUID,
+    CONSTRAINT fk_parent
+      FOREIGN KEY(parent_id)
+        REFERENCES categories(id)
+);

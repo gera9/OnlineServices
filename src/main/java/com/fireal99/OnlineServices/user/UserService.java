@@ -16,7 +16,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UUID createUser(User user) {
+    public UUID create(User user) {
         return userRepository.save(user).getId();
     }
 

@@ -24,8 +24,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UUID createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public UUID create(@RequestBody User user) {
+        return userService.create(user);
     }
 
     @GetMapping

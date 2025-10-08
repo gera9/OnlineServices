@@ -16,7 +16,7 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public UUID createCompany(Company company) {
+    public UUID create(Company company) {
         return companyRepository.save(company).getId();
     }
 
